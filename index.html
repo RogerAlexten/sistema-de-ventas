@@ -384,9 +384,9 @@
             return DB.usuarios.some(u => u.usuario === usuarioOCedula || u.cedula === usuarioOCedula);
         }
 
-        // ==========================================
-        // 4. LÓGICA DE USUARIOS
-        // ==========================================
+        // 4. LOGICA DE USUARIOS
+
+// --- FUNCION CORREGIDA: Registrar Usuario ---
         function registrarUsuario(rol, prefijo) {
             let nombres = document.getElementById(prefijo + 'Nombres').value.trim();
             let apellidos = document.getElementById(prefijo + 'Apellidos').value.trim();
@@ -406,13 +406,26 @@
             };
             
             DB.usuarios.push(nuevoUsuario);
-            sincronizarNube(); // <-- Guarda directo a internet
+            sincronizarNube(); // Guarda directo a internet
 
             alert(rol + " registrado exitosamente.");
-            document.querySelectorAll('#view-registro-cliente input, #view-admin input[type!="password"]').forEach(input => input.value = '');
+            
+            // CORRECCIÓN: Limpiamos los campos exactamente usando su prefijo para que no quede rastro
+            document.getElementById(prefijo + 'Nombres').value = '';
+            document.getElementById(prefijo + 'Apellidos').value = '';
+            document.getElementById(prefijo + 'Cedula').value = '';
+            document.getElementById(prefijo + 'Edad').value = '';
+            document.getElementById(prefijo + 'Correo').value = '';
+            document.getElementById(prefijo + 'Pass').value = '';
 
-            if(usuarioActual && usuarioActual.rol === 'Admin') cargarUsuariosListadosAdmin();
-            else mostrarVista('view-home');
+            // CORRECCIÓN DE FLUJO: Redirección inteligente
+            if(usuarioActual && usuarioActual.rol === 'Admin') {
+                // Si el administrador creó al usuario, lo deja en el panel pero actualiza la tabla de abajo
+                cargarUsuariosListadosAdmin(); 
+            } else {
+                // Si es un cliente registrándose desde afuera, lo saca de ahí y lo manda al inicio limpio
+                mostrarVista('view-home'); 
+            }
         }
 
         function iniciarSesion() {
