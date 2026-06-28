@@ -523,6 +523,45 @@
             document.getElementById('listaClientesVendedor').innerHTML = clientes.length ? html : '<p>No hay clientes registrados.</p>';
         }
 
+// --- FUNCIÓN NUEVA: Comprimir imagen antes de guardar ---
+        function comprimirImagen(file, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    // Establecemos un tamaño máximo pequeño (ej. 300px) para no saturar JSONBin
+                    const MAX_WIDTH = 300; 
+                    const MAX_HEIGHT = 300;
+                    let width = img.width;
+                    let height = img.height;
+
+                    if (width > height) {
+                        if (width > MAX_WIDTH) {
+                            height *= MAX_WIDTH / width;
+                            width = MAX_WIDTH;
+                        }
+                    } else {
+                        if (height > MAX_HEIGHT) {
+                            width *= MAX_HEIGHT / height;
+                            height = MAX_HEIGHT;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    
+                    // Comprimimos a formato JPEG con 60% de calidad (súper ligero)
+                    const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
+                    callback(dataUrl);
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Registrar Producto ---
         function registrarProducto() {
             let id = document.getElementById('prodId').value.trim();
             let nombre = document.getElementById('prodNombre').value.trim();
@@ -533,21 +572,23 @@
 
             if(!id || !nombre || !info || isNaN(precio) || isNaN(cantidad)) { alert("Complete todos los campos obligatorios del producto."); return; }
             if(precio <= 0 || cantidad < 0) { alert("Precio debe ser > 0 y cantidad >= 0."); return; }
-
             if(DB.productos.some(p => p.id === id)) { alert("Ya existe un producto con el ID: " + id); return; }
 
             let guardar = (foto) => {
                 DB.productos.push({ id: id, nombre: nombre, info: info, precio: precio, cantidad: cantidad, foto: foto });
-                sincronizarNube(); // Subimos producto y foto a la nube
+                sincronizarNube(); // Subimos producto y foto ya comprimida a la nube
                 alert("Producto registrado correctamente.");
                 document.querySelectorAll('#tab-add-producto input, #tab-add-producto textarea').forEach(inp => inp.value='');
             };
 
             if(archivoFoto) {
-                let lector = new FileReader();
-                lector.onload = function(evento) { guardar(evento.target.result); };
-                lector.readAsDataURL(archivoFoto);
-            } else { guardar(null); }
+                // Aquí usamos la nueva función para comprimir antes de guardar
+                comprimirImagen(archivoFoto, function(imagenComprimida) {
+                    guardar(imagenComprimida);
+                });
+            } else { 
+                guardar(null); 
+            }
         }
 
         function eliminarProducto(id, contenedorRedireccion) {
