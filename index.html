@@ -10,91 +10,61 @@
         body { background-color: #f4f4f9; color: #333; }
         
         /* Franja superior estática */
-        header {
-            background-color: #000080; /* Azul marino */
-            color: white;
-            font-size: 24px;
-            font-weight: bold;
-            padding: 15px 30px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .header-controls {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-size: 16px;
-        }
+        header { background-color: #000080; color: white; font-size: 24px; font-weight: bold; padding: 15px 30px; position: sticky; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; }
+        .header-controls { display: flex; align-items: center; gap: 15px; font-size: 16px; }
         .btn-saldo { background: #28a745; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px; font-weight: bold; display: none; }
         .btn-saldo:hover { background: #218838; }
+        .btn-historial { background: #ff9900; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px; font-weight: bold; display: none; }
+        .btn-historial:hover { background: #e68a00; }
         .logout-btn { background: #ff4d4d; color: white; border: none; padding: 8px 15px; cursor: pointer; border-radius: 5px; font-weight: bold; display: none; }
         
-        /* Contenedor principal */
+        /* Contenedores */
         .container { max-width: 1000px; margin: 30px auto; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
-        .view { display: none; } /* Oculta todas las vistas por defecto */
-        .active-view { display: block; } /* Muestra la vista activa */
+        .view { display: none; } 
+        .active-view { display: block; } 
         
-        /* Títulos y Botones */
         h1, h2 { text-align: center; margin-bottom: 20px; color: #000080; }
         .btn-group { display: flex; justify-content: center; gap: 15px; margin-bottom: 20px; flex-wrap: wrap; }
         button { background-color: #000080; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 5px; cursor: pointer; transition: 0.3s; }
         button:hover { background-color: #000050; }
+        button:disabled { background-color: #999; cursor: not-allowed; }
         .btn-cancel { background-color: #666; } .btn-cancel:hover { background-color: #444; }
         .btn-delete { background-color: #dc3545; padding: 6px 12px; font-size: 14px; } .btn-delete:hover { background-color: #bd2130; }
+        .btn-comprar { background-color: #28a745; font-size: 18px; width: 100%; margin-top: 15px; } .btn-comprar:hover { background-color: #218838; }
+        .btn-link { background-color: transparent; color: #000080; text-decoration: underline; padding: 0; margin-top: 10px; } .btn-link:hover { background-color: transparent; color: #000050; }
         
-        /* Formularios */
         .form-container { max-width: 450px; margin: 0 auto 30px auto; display: flex; flex-direction: column; gap: 10px; }
         input, select, textarea { padding: 10px; border: 1px solid #ccc; border-radius: 5px; font-size: 16px; width: 100%; }
         textarea { resize: vertical; min-height: 80px; }
         
-        /* Pestañas (Admin y Vendedor) */
         .tabs { display: flex; justify-content: center; margin-bottom: 20px; border-bottom: 2px solid #ccc; }
         .tab { padding: 10px 20px; cursor: pointer; font-weight: bold; color: #666; }
         .tab.active { color: #000080; border-bottom: 3px solid #000080; }
         .tab-content { display: none; }
         .tab-content.active { display: block; }
 
-        /* Tablas de Gestión (Eliminar usuarios) */
         .management-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #fafafa; }
         .management-table th, .management-table td { border: 1px solid #ddd; padding: 10px; text-align: left; }
         .management-table th { background-color: #eee; color: #333; }
 
-        /* Productos (Estilo Gris Claro) */
+        /* Productos */
         .products-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
-        .product-card {
-            background: #e6e6e6; /* Gris claro */
-            color: #333; 
-            border-radius: 15px; display: flex; overflow: hidden;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.15); align-items: center; justify-content: space-between;
-        }
-        .product-info { padding: 20px; flex: 1; }
+        .product-card { background: #e6e6e6; color: #333; border-radius: 15px; display: flex; overflow: hidden; box-shadow: 0 4px 8px rgba(0,0,0,0.15); align-items: stretch; justify-content: space-between; }
+        .product-info { padding: 20px; flex: 1; display: flex; flex-direction: column; justify-content: space-between; }
         .product-info h3 { margin-bottom: 10px; font-size: 22px; color: #000080; text-align: left; }
         .product-info p { margin-bottom: 5px; font-size: 16px; color: #444; }
         
-        .product-id-section {
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            font-weight: bold;
-            color: #b30000;
-            border-left: 2px dashed #ccc;
-            border-right: 2px dashed #ccc;
-            background: #f5f5f5;
-            align-self: stretch;
-            gap: 10px;
-        }
-
-        .product-image { width: 180px; height: 180px; background: #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .product-id-section { padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; font-size: 20px; font-weight: bold; color: #b30000; border-left: 2px dashed #ccc; border-right: 2px dashed #ccc; background: #f5f5f5; width: 120px; gap: 10px; }
+        
+        .product-image { width: 220px; background: #ddd; display: flex; align-items: center; justify-content: center; overflow: hidden; position: relative; }
         .product-image img { width: 100%; height: 100%; object-fit: cover; }
+        .agotado-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(200, 0, 0, 0.7); color: white; display: flex; align-items: center; justify-content: center; font-size: 28px; font-weight: bold; text-shadow: 2px 2px 4px rgba(0,0,0,0.5); letter-spacing: 2px; }
 
-        /* Pantalla de carga */
+        /* Agregar stock (vendedor) */
+        .add-stock-container { background: #d4edda; border: 1px solid #c3e6cb; padding: 10px; border-radius: 5px; margin-top: 10px; display: flex; gap: 10px; align-items: center; }
+        .add-stock-container input { width: 80px; padding: 5px; }
+        .add-stock-container button { padding: 5px 10px; font-size: 14px; background: #28a745; }
+
         .loader { text-align: center; margin-top: 50px; font-size: 20px; color: #000080; font-weight: bold; }
     </style>
 </head>
@@ -104,6 +74,7 @@
         <span>ventas uae</span>
         <div class="header-controls">
             <button id="btnSaldo" class="btn-saldo" onclick="abrirMenuPago()">$0.00</button>
+            <button id="btnHistorialCliente" class="btn-historial" onclick="mostrarHistorial()">Historial</button>
             <span id="lblNombreUsuario" style="font-weight: normal; display: none;"></span>
             <button id="btnCerrarSesion" class="logout-btn" onclick="cerrarSesion()">Cerrar Sesión</button>
         </div>
@@ -144,6 +115,7 @@
                 <input type="email" id="regCliCorreo" placeholder="Correo Electrónico">
                 <input type="password" id="regCliPass" placeholder="Contraseña">
                 <button onclick="registrarUsuario('Cliente', 'regCli')">Registrarme</button>
+                <button class="btn-link" onclick="mostrarVista('view-login')">¿Ya tienes cuenta? Inicia sesión</button>
                 <button class="btn-cancel" onclick="mostrarVista('view-home')">Cancelar</button>
             </div>
         </div>
@@ -156,52 +128,30 @@
                 <div class="tab" onclick="cambiarTabAdmin('tab-add-admin')">Administradores</div>
                 <div class="tab" onclick="cambiarTabAdmin('tab-admin-productos')">Ver/Eliminar Productos</div>
             </div>
-
             <div id="tab-add-vendedor" class="tab-content active">
                 <div class="form-container">
                     <h3>Nuevo Vendedor</h3>
-                    <input type="text" id="admVenNombres" placeholder="Nombres">
-                    <input type="text" id="admVenApellidos" placeholder="Apellidos">
-                    <input type="text" id="admVenCedula" placeholder="ID (Cédula)">
-                    <input type="number" id="admVenEdad" placeholder="Edad">
-                    <input type="email" id="admVenCorreo" placeholder="Correo">
-                    <input type="password" id="admVenPass" placeholder="Contraseña">
-                    <button onclick="registrarUsuario('Vendedor', 'admVen')">Registrar Vendedor</button>
+                    <input type="text" id="admVenNombres" placeholder="Nombres"><input type="text" id="admVenApellidos" placeholder="Apellidos"><input type="text" id="admVenCedula" placeholder="ID (Cédula)"><input type="number" id="admVenEdad" placeholder="Edad"><input type="email" id="admVenCorreo" placeholder="Correo"><input type="password" id="admVenPass" placeholder="Contraseña"><button onclick="registrarUsuario('Vendedor', 'admVen')">Registrar Vendedor</button>
                 </div>
-                <h3>Listado de Vendedores</h3>
-                <div id="listaVendedoresAdmin"></div>
+                <h3>Listado de Vendedores</h3><div id="listaVendedoresAdmin"></div>
             </div>
-
             <div id="tab-add-cliente" class="tab-content">
                 <div class="form-container">
                     <h3>Nuevo Cliente</h3>
-                    <input type="text" id="admCliNombres" placeholder="Nombres">
-                    <input type="text" id="admCliApellidos" placeholder="Apellidos">
-                    <input type="text" id="admCliCedula" placeholder="ID (Cédula)">
-                    <input type="number" id="admCliEdad" placeholder="Edad">
-                    <input type="email" id="admCliCorreo" placeholder="Correo">
-                    <input type="password" id="admCliPass" placeholder="Contraseña">
-                    <button onclick="registrarUsuario('Cliente', 'admCli')">Registrar Cliente</button>
+                    <input type="text" id="admCliNombres" placeholder="Nombres"><input type="text" id="admCliApellidos" placeholder="Apellidos"><input type="text" id="admCliCedula" placeholder="ID (Cédula)"><input type="number" id="admCliEdad" placeholder="Edad"><input type="email" id="admCliCorreo" placeholder="Correo"><input type="password" id="admCliPass" placeholder="Contraseña"><button onclick="registrarUsuario('Cliente', 'admCli')">Registrar Cliente</button>
                 </div>
-                <h3>Listado de Clientes</h3>
-                <div id="listaClientesAdmin"></div>
+                <h3>Listado de Clientes</h3><div id="listaClientesAdmin"></div>
             </div>
-
             <div id="tab-add-admin" class="tab-content">
                 <div class="form-container" id="adminCodeSection">
                     <h3>Autenticación requerida</h3>
-                    <p>Antes de ingresar otro administrador, ingrese el código maestro:</p>
-                    <input type="password" id="adminSecretCode" placeholder="Código Secreto">
-                    <button onclick="verificarCodigoAdmin()">Verificar</button>
+                    <input type="password" id="adminSecretCode" placeholder="Código Secreto"><button onclick="verificarCodigoAdmin()">Verificar</button>
                 </div>
                 <div class="form-container" id="adminFormSection" style="display: none;">
                     <h3>Nuevo Administrador</h3>
-                    <input type="text" id="admAdminUsuario" placeholder="Nuevo Usuario">
-                    <input type="password" id="admAdminPass" placeholder="Contraseña">
-                    <button onclick="registrarAdmin()">Registrar Administrador</button>
+                    <input type="text" id="admAdminUsuario" placeholder="Nuevo Usuario"><input type="password" id="admAdminPass" placeholder="Contraseña"><button onclick="registrarAdmin()">Registrar Administrador</button>
                 </div>
             </div>
-
             <div id="tab-admin-productos" class="tab-content">
                 <div id="listaProductosAdmin" class="products-grid"></div>
             </div>
@@ -211,10 +161,9 @@
             <h2>Panel de Vendedor</h2>
             <div class="tabs">
                 <div class="tab active" onclick="cambiarTabVendedor('tab-add-producto')">Registrar Producto</div>
-                <div class="tab" onclick="cambiarTabVendedor('tab-ver-productos')">Ver Productos</div>
+                <div class="tab" onclick="cambiarTabVendedor('tab-ver-productos')">Mis Productos y Stock</div>
                 <div class="tab" onclick="cambiarTabVendedor('tab-vendedor-clientes')">Gestionar Clientes</div>
             </div>
-
             <div id="tab-add-producto" class="tab-content active">
                 <div class="form-container">
                     <input type="text" id="prodId" placeholder="ID del Producto">
@@ -222,17 +171,15 @@
                     <textarea id="prodInfo" placeholder="Información / Descripción del Producto"></textarea>
                     <label style="color: #666; font-size: 14px; margin-bottom: -5px;">Precio (USD):</label>
                     <input type="number" id="prodPrecio" placeholder="$0.00" step="0.01">
-                    <input type="number" id="prodCantidad" placeholder="Cantidad Existente">
+                    <input type="number" id="prodCantidad" placeholder="Cantidad Inicial">
                     <label style="color: #666; font-size: 14px; margin-bottom: -5px;">Foto del producto:</label>
                     <input type="file" id="prodFoto" accept="image/*">
                     <button onclick="registrarProducto()">Registrar Producto</button>
                 </div>
             </div>
-
             <div id="tab-ver-productos" class="tab-content">
                 <div id="listaProductosVendedor" class="products-grid"></div>
             </div>
-
             <div id="tab-vendedor-clientes" class="tab-content">
                 <h3>Listado de Clientes del Sistema</h3>
                 <div id="listaClientesVendedor"></div>
@@ -250,11 +197,11 @@
         <div id="view-recarga" class="view">
             <h2>Gestión de Saldo</h2>
             <div class="form-container">
-                <h3 style="text-align:center; color:#28a745; margin-bottom: 10px;">Saldo Actual: $<span id="lblSaldoPantalla">0.00</span></h3>
-                <p style="text-align:center; font-size: 14px; color: #666;">Seleccione su método de pago para recargar fondos en el sistema.</p>
+                <h3 style="text-align:center; color:#28a745; margin-bottom: 10px;">Saldo en Sistema: $<span id="lblSaldoPantalla">0.00</span></h3>
+                <p style="text-align:center; font-size: 14px; color: #666;">Seleccione su banco para realizar una transferencia.</p>
                 
                 <select id="selectMetodoPago" onchange="mostrarFormularioPago()">
-                    <option value="">-- Seleccionar Método --</option>
+                    <option value="">-- Seleccionar Banco / Billetera --</option>
                     <option value="paypal">PayPal</option>
                     <option value="paygo">PayGo</option>
                     <option value="guayaquil">Banco Guayaquil</option>
@@ -262,63 +209,67 @@
                     <option value="pichincha">Banco Pichincha</option>
                 </select>
 
-                <div id="contenedorFormularioPago" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
-                    </div>
+                <div id="contenedorFormularioPago" style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;"></div>
 
-                <button style="background: #28a745;" onclick="simularRecarga()">Vincular y Recargar Saldo</button>
+                <div id="zonaTransferencia" style="display: none; background: #e9ecef; padding: 15px; border-radius: 5px; margin-top: 15px;">
+                    <h4 style="text-align:center; color:#000080;">Saldo en Banco: $<span id="lblSaldoBanco">0.00</span></h4>
+                    <p style="font-size: 14px; margin-top:10px;">¿Cuánto deseas ingresar al sistema?</p>
+                    <input type="number" id="montoATransferir" placeholder="Monto a transferir" step="0.01">
+                    <button style="background: #28a745; width: 100%; margin-top:10px;" onclick="simularRecarga()">Transferir Fondos</button>
+                </div>
                 <button class="btn-cancel" onclick="mostrarProductosPublicos()">Cancelar</button>
             </div>
+        </div>
+
+        <div id="view-historial-cliente" class="view">
+            <h2>Mi Historial de Compras</h2>
+            <div class="btn-group">
+                <button class="btn-cancel" onclick="mostrarProductosPublicos()">Volver al Catálogo</button>
+            </div>
+            <div id="listaHistorialCompras"></div>
         </div>
 
     </div>
 
     <script>
-        // ==========================================
-        // 1. CONFIGURACIÓN DE BASE DE DATOS EN LA NUBE
-        // ==========================================
         const BIN_ID = '6a417a10f5f4af5e293e60fb'; 
         const API_KEY = '$2a$10$af69JbqOa6Kyd.O5qi70M.HHnHGjLK/lttwvA91sPhi2tCd6qIEVW';
 
-        // Estructura global
         let DB = { usuarios: [], productos: [] };
         let usuarioActual = null;
 
-        // Cargar datos al iniciar la página
         window.onload = async function() {
             try {
-                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, {
-                    headers: { 'X-Master-Key': API_KEY }
-                });
+                let res = await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}/latest`, { headers: { 'X-Master-Key': API_KEY } });
                 let data = await res.json();
-                if(data.record && data.record.usuarios) {
-                    DB = data.record;
-                }
-            } catch (error) {
-                console.error("Error al conectar con la nube. Asegúrate de configurar BIN_ID y API_KEY", error);
-                alert("Error de conexión. Trabajando en modo Offline localmente.");
-            }
-            mostrarVista('view-home'); // Quita pantalla de carga y muestra inicio
+                if(data.record && data.record.usuarios) DB = data.record;
+            } catch (error) { console.error("Error", error); }
+            mostrarVista('view-home');
         };
 
-        // Guardar cambios en la nube (Se llama cada vez que creas o borras algo)
         async function sincronizarNube() {
             try {
-                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'X-Master-Key': API_KEY
-                    },
-                    body: JSON.stringify(DB)
-                });
-            } catch (error) {
-                console.error("No se pudo guardar en la nube", error);
-            }
+                await fetch(`https://api.jsonbin.io/v3/b/${BIN_ID}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY }, body: JSON.stringify(DB) });
+            } catch (error) { console.error("Error", error); }
         }
 
-        // ==========================================
-        // 2. CONTROL DE VISTAS Y CABECERA
-        // ==========================================
+        function comprimirImagen(file, callback) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.createElement('canvas');
+                    const MAX = 300; let w = img.width, h = img.height;
+                    if(w > h) { if(w > MAX) { h *= MAX / w; w = MAX; } } else { if(h > MAX) { w *= MAX / h; h = MAX; } }
+                    canvas.width = w; canvas.height = h;
+                    const ctx = canvas.getContext('2d'); ctx.drawImage(img, 0, 0, w, h);
+                    callback(canvas.toDataURL('image/jpeg', 0.6));
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
         function mostrarVista(idVista) {
             document.querySelectorAll('.view').forEach(el => el.classList.remove('active-view'));
             document.getElementById(idVista).classList.add('active-view');
@@ -329,64 +280,37 @@
             const btnCerrar = document.getElementById('btnCerrarSesion');
             const lblNombre = document.getElementById('lblNombreUsuario');
             const btnSaldo = document.getElementById('btnSaldo');
+            const btnHistorial = document.getElementById('btnHistorialCliente');
 
             if(usuarioActual) {
-                btnCerrar.style.display = 'block';
-                lblNombre.style.display = 'block';
-                
+                btnCerrar.style.display = 'block'; lblNombre.style.display = 'block';
                 if (usuarioActual.rol === 'Admin') {
-                    lblNombre.innerText = "Administrador 1";
-                    btnSaldo.style.display = 'none';
+                    lblNombre.innerText = "Administrador 1"; btnSaldo.style.display = 'none'; btnHistorial.style.display = 'none';
                 } else if (usuarioActual.rol === 'Cliente') {
                     lblNombre.innerText = usuarioActual.nombres || "Cliente";
-                    btnSaldo.style.display = 'block';
-                    let saldoVisual = usuarioActual.saldo ? parseFloat(usuarioActual.saldo).toFixed(2) : "0.00";
-                    btnSaldo.innerText = "$" + saldoVisual;
+                    btnSaldo.style.display = 'block'; btnHistorial.style.display = 'block';
+                    btnSaldo.innerText = "$" + (usuarioActual.saldo ? parseFloat(usuarioActual.saldo).toFixed(2) : "0.00");
                 } else {
                     lblNombre.innerText = usuarioActual.nombres || "Vendedor";
-                    btnSaldo.style.display = 'none';
+                    btnSaldo.style.display = 'none'; btnHistorial.style.display = 'none';
                 }
             } else {
-                btnCerrar.style.display = 'none';
-                lblNombre.style.display = 'none';
-                btnSaldo.style.display = 'none';
+                btnCerrar.style.display = 'none'; lblNombre.style.display = 'none'; btnSaldo.style.display = 'none'; btnHistorial.style.display = 'none';
             }
         }
 
-        // ==========================================
-        // 3. VALIDACIONES
-        // ==========================================
         function validarCedula(cedula) {
             if (!cedula || cedula.length !== 10 || !/^\d+$/.test(cedula)) return false;
-            let provincia = parseInt(cedula.substring(0, 2));
-            if (provincia < 1 || (provincia > 24 && provincia !== 30)) return false;
-            let tercerDigito = parseInt(cedula.substring(2, 3));
-            if (tercerDigito >= 6) return false;
-            
-            let coeficientes = [2, 1, 2, 1, 2, 1, 2, 1, 2];
-            let verificador = parseInt(cedula.substring(9, 10));
-            let suma = 0;
-            
-            for (let i = 0; i < 9; i++) {
-                let digito = parseInt(cedula.charAt(i)) * coeficientes[i];
-                if (digito > 9) digito -= 9;
-                suma += digito;
-            }
-            let modulo = suma % 10;
-            let resultado = (modulo === 0) ? 0 : 10 - modulo;
-            return resultado === verificador;
+            let p = parseInt(cedula.substring(0, 2)); if (p < 1 || (p > 24 && p !== 30)) return false;
+            if (parseInt(cedula.substring(2, 3)) >= 6) return false;
+            let coef = [2, 1, 2, 1, 2, 1, 2, 1, 2], suma = 0;
+            for (let i = 0; i < 9; i++) { let d = parseInt(cedula.charAt(i)) * coef[i]; if(d > 9) d -= 9; suma += d; }
+            let mod = suma % 10; return ((mod === 0) ? 0 : 10 - mod) === parseInt(cedula.substring(9, 10));
         }
+        function validarTexto(t) { return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(t); }
+        function validarEdad(e) { return e >= 18 && e <= 65; }
+        function usuarioExiste(c) { return DB.usuarios.some(u => u.usuario === c || u.cedula === c); }
 
-        function validarTexto(texto) { return /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/.test(texto); }
-        function validarEdad(edad) { return edad >= 18 && edad <= 65; }
-
-        function usuarioExiste(usuarioOCedula) {
-            return DB.usuarios.some(u => u.usuario === usuarioOCedula || u.cedula === usuarioOCedula);
-        }
-
-        // 4. LOGICA DE USUARIOS
-
-// --- FUNCION CORREGIDA: Registrar Usuario ---
         function registrarUsuario(rol, prefijo) {
             let nombres = document.getElementById(prefijo + 'Nombres').value.trim();
             let apellidos = document.getElementById(prefijo + 'Apellidos').value.trim();
@@ -396,310 +320,221 @@
             let pass = document.getElementById(prefijo + 'Pass').value;
 
             if(!nombres || !apellidos || !cedula || !correo || !pass || isNaN(edad)) { alert("Complete todos los campos."); return; }
-            if(!validarTexto(nombres) || !validarTexto(apellidos)) { alert("Los nombres y apellidos solo pueden contener letras."); return; }
-            if(!validarCedula(cedula)) { alert("La cédula ingresada no es válida."); return; }
-            if(!validarEdad(edad)) { alert("La edad debe estar entre 18 y 65 años."); return; }
-            if(usuarioExiste(cedula)) { alert("Esta cédula ya se encuentra registrada."); return; }
+            if(!validarTexto(nombres) || !validarTexto(apellidos)) { alert("Nombres y apellidos solo letras."); return; }
+            if(!validarCedula(cedula)) { alert("Cédula no válida."); return; }
+            if(!validarEdad(edad)) { alert("Edad entre 18 y 65."); return; }
+            if(usuarioExiste(cedula)) { alert("Cédula ya registrada."); return; }
 
-            let nuevoUsuario = { 
-                rol: rol, usuario: cedula, nombres: nombres, apellidos: apellidos, cedula: cedula, edad: edad, correo: correo, contrasena: pass, saldo: 0.00 
-            };
-            
-            DB.usuarios.push(nuevoUsuario);
-            sincronizarNube(); // Guarda directo a internet
+            let nuevoUsuario = { rol: rol, usuario: cedula, nombres: nombres, apellidos: apellidos, cedula: cedula, edad: edad, correo: correo, contrasena: pass, saldo: 0.00, saldosBancos: {}, historialCompras: [] };
+            DB.usuarios.push(nuevoUsuario); sincronizarNube(); alert(rol + " registrado exitosamente.");
 
-            alert(rol + " registrado exitosamente.");
-            
-            // CORRECCIÓN: Limpiamos los campos exactamente usando su prefijo para que no quede rastro
-            document.getElementById(prefijo + 'Nombres').value = '';
-            document.getElementById(prefijo + 'Apellidos').value = '';
-            document.getElementById(prefijo + 'Cedula').value = '';
-            document.getElementById(prefijo + 'Edad').value = '';
-            document.getElementById(prefijo + 'Correo').value = '';
-            document.getElementById(prefijo + 'Pass').value = '';
+            document.getElementById(prefijo + 'Nombres').value = ''; document.getElementById(prefijo + 'Apellidos').value = '';
+            document.getElementById(prefijo + 'Cedula').value = ''; document.getElementById(prefijo + 'Edad').value = '';
+            document.getElementById(prefijo + 'Correo').value = ''; document.getElementById(prefijo + 'Pass').value = '';
 
-            // CORRECCIÓN DE FLUJO: Redirección inteligente
-            if(usuarioActual && usuarioActual.rol === 'Admin') {
-                // Si el administrador creó al usuario, lo deja en el panel pero actualiza la tabla de abajo
-                cargarUsuariosListadosAdmin(); 
-            } else {
-                // Si es un cliente registrándose desde afuera, lo saca de ahí y lo manda al inicio limpio
-                mostrarVista('view-home'); 
-            }
+            if(usuarioActual && usuarioActual.rol === 'Admin') cargarUsuariosListadosAdmin();
+            else mostrarVista('view-login'); // Después de registrarse, mandarlo al login
         }
 
         function iniciarSesion() {
-            let user = document.getElementById('logUsuario').value.trim();
-            let pass = document.getElementById('logPass').value;
-
+            let user = document.getElementById('logUsuario').value.trim(), pass = document.getElementById('logPass').value;
             let cuenta = DB.usuarios.find(u => u.usuario === user && u.contrasena === pass);
-
             if (cuenta) {
-                usuarioActual = cuenta;
-                document.getElementById('logUsuario').value = '';
-                document.getElementById('logPass').value = '';
-                
+                usuarioActual = cuenta; document.getElementById('logUsuario').value = ''; document.getElementById('logPass').value = '';
                 actualizarCabecera();
-
                 if(cuenta.rol === 'Admin') { mostrarVista('view-admin'); cargarUsuariosListadosAdmin(); }
                 else if (cuenta.rol === 'Vendedor') { mostrarVista('view-vendedor'); cargarClientesVendedor(); }
                 else if (cuenta.rol === 'Cliente') mostrarProductosPublicos();
             } else { alert("Usuario o contraseña incorrectos."); }
         }
-
-        function cerrarSesion() {
-            usuarioActual = null;
-            mostrarVista('view-home');
-        }
-
-        function eliminarUsuario(cedula, rol) {
-            if(confirm(`¿Está seguro que desea eliminar este ${rol}?`)) {
-                DB.usuarios = DB.usuarios.filter(u => u.cedula !== cedula);
-                sincronizarNube(); // <-- Actualiza la nube borrando al usuario
-
-                alert(`${rol} eliminado con éxito.`);
+        function cerrarSesion() { usuarioActual = null; mostrarVista('view-home'); }
+        function eliminarUsuario(c, rol) {
+            if(confirm(`¿Eliminar ${rol}?`)) {
+                DB.usuarios = DB.usuarios.filter(u => u.cedula !== c); sincronizarNube(); alert(`${rol} eliminado.`);
                 if (usuarioActual && usuarioActual.rol === 'Admin') cargarUsuariosListadosAdmin();
                 if (usuarioActual && usuarioActual.rol === 'Vendedor') cargarClientesVendedor();
             }
         }
 
-        // ==========================================
-        // 5. LÓGICA DEL ADMINISTRADOR
-        // ==========================================
-        function cambiarTabAdmin(idTab) {
-            document.querySelectorAll('#view-admin .tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('#view-admin .tab-content').forEach(tc => tc.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById(idTab).classList.add('active');
-            
-            document.getElementById('adminCodeSection').style.display = 'block';
-            document.getElementById('adminFormSection').style.display = 'none';
-            document.getElementById('adminSecretCode').value = '';
+        function cambiarTabAdmin(id) { document.querySelectorAll('#view-admin .tab').forEach(t => t.classList.remove('active')); document.querySelectorAll('#view-admin .tab-content').forEach(tc => tc.classList.remove('active')); event.target.classList.add('active'); document.getElementById(id).classList.add('active'); document.getElementById('adminCodeSection').style.display = 'block'; document.getElementById('adminFormSection').style.display = 'none'; document.getElementById('adminSecretCode').value = ''; if (id === 'tab-admin-productos') cargarProductosDOM('listaProductosAdmin'); }
+        function verificarCodigoAdmin() { if(document.getElementById('adminSecretCode').value === "2443217") { document.getElementById('adminCodeSection').style.display = 'none'; document.getElementById('adminFormSection').style.display = 'block'; } else alert("Código maestro incorrecto."); }
+        function registrarAdmin() { let u = document.getElementById('admAdminUsuario').value.trim(), p = document.getElementById('admAdminPass').value; if(!u || !p) return alert("Complete todo"); if(usuarioExiste(u)) return alert("Usuario existe"); DB.usuarios.push({ rol: 'Admin', usuario: u, contrasena: p }); sincronizarNube(); alert("Registrado."); document.getElementById('admAdminUsuario').value = ''; document.getElementById('admAdminPass').value = ''; cambiarTabAdmin('tab-add-vendedor'); }
+        function cargarUsuariosListadosAdmin() { let v = DB.usuarios.filter(u => u.rol === 'Vendedor'); let hV = `<table class="management-table"><tr><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Acciones</th></tr>`; v.forEach(x => { hV += `<tr><td>${x.nombres} ${x.apellidos}</td><td>${x.cedula}</td><td>${x.correo}</td><td><button class="btn-delete" onclick="eliminarUsuario('${x.cedula}', 'Vendedor')">Eliminar</button></td></tr>`; }); document.getElementById('listaVendedoresAdmin').innerHTML = v.length ? hV+'</table>' : '<p>Vacio</p>'; let c = DB.usuarios.filter(u => u.rol === 'Cliente'); let hC = `<table class="management-table"><tr><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Acciones</th></tr>`; c.forEach(x => { hC += `<tr><td>${x.nombres} ${x.apellidos}</td><td>${x.cedula}</td><td>${x.correo}</td><td><button class="btn-delete" onclick="eliminarUsuario('${x.cedula}', 'Cliente')">Eliminar</button></td></tr>`; }); document.getElementById('listaClientesAdmin').innerHTML = c.length ? hC+'</table>' : '<p>Vacio</p>'; }
 
-            if (idTab === 'tab-admin-productos') cargarProductosDOM('listaProductosAdmin');
-        }
+        function cambiarTabVendedor(id) { document.querySelectorAll('#view-vendedor .tab').forEach(t => t.classList.remove('active')); document.querySelectorAll('#view-vendedor .tab-content').forEach(tc => tc.classList.remove('active')); event.target.classList.add('active'); document.getElementById(id).classList.add('active'); if(id === 'tab-ver-productos') cargarProductosDOM('listaProductosVendedor'); if(id === 'tab-vendedor-clientes') cargarClientesVendedor(); }
+        function cargarClientesVendedor() { let c = DB.usuarios.filter(u => u.rol === 'Cliente'); let h = `<table class="management-table"><tr><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Acciones</th></tr>`; c.forEach(x => { h += `<tr><td>${x.nombres} ${x.apellidos}</td><td>${x.cedula}</td><td>${x.correo}</td><td><button class="btn-delete" onclick="eliminarUsuario('${x.cedula}', 'Cliente')">Eliminar</button></td></tr>`; }); document.getElementById('listaClientesVendedor').innerHTML = c.length ? h+'</table>' : '<p>Vacio</p>'; }
 
-        function verificarCodigoAdmin() {
-            if(document.getElementById('adminSecretCode').value === "2443217") {
-                document.getElementById('adminCodeSection').style.display = 'none';
-                document.getElementById('adminFormSection').style.display = 'block';
-            } else { alert("Código maestro incorrecto."); }
-        }
-
-        function registrarAdmin() {
-            let user = document.getElementById('admAdminUsuario').value.trim();
-            let pass = document.getElementById('admAdminPass').value;
-            if(!user || !pass) { alert("Complete todos los campos."); return; }
-            if(usuarioExiste(user)) { alert("Este nombre de usuario ya existe."); return; }
-
-            DB.usuarios.push({ rol: 'Admin', usuario: user, contrasena: pass });
-            sincronizarNube();
-
-            alert("Administrador registrado exitosamente.");
-            document.getElementById('admAdminUsuario').value = '';
-            document.getElementById('admAdminPass').value = '';
-            cambiarTabAdmin('tab-add-vendedor');
-        }
-
-        function cargarUsuariosListadosAdmin() {
-            let vendedors = DB.usuarios.filter(u => u.rol === 'Vendedor');
-            let htmlVen = `<table class="management-table"><tr><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Acciones</th></tr>`;
-            vendedors.forEach(v => { htmlVen += `<tr><td>${v.nombres} ${v.apellidos}</td><td>${v.cedula}</td><td>${v.correo}</td><td><button class="btn-delete" onclick="eliminarUsuario('${v.cedula}', 'Vendedor')">Eliminar</button></td></tr>`; });
-            htmlVen += `</table>`;
-            document.getElementById('listaVendedoresAdmin').innerHTML = vendedors.length ? htmlVen : '<p>No hay vendedores creados.</p>';
-
-            let clientes = DB.usuarios.filter(u => u.rol === 'Cliente');
-            let htmlCli = `<table class="management-table"><tr><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Acciones</th></tr>`;
-            clientes.forEach(c => { htmlCli += `<tr><td>${c.nombres} ${c.apellidos}</td><td>${c.cedula}</td><td>${c.correo}</td><td><button class="btn-delete" onclick="eliminarUsuario('${c.cedula}', 'Cliente')">Eliminar</button></td></tr>`; });
-            htmlCli += `</table>`;
-            document.getElementById('listaClientesAdmin').innerHTML = clientes.length ? htmlCli : '<p>No hay clientes creados.</p>';
-        }
-
-        // ==========================================
-        // 6. LÓGICA DE VENDEDORES Y PRODUCTOS
-        // ==========================================
-        function cambiarTabVendedor(idTab) {
-            document.querySelectorAll('#view-vendedor .tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('#view-vendedor .tab-content').forEach(tc => tc.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById(idTab).classList.add('active');
-            
-            if(idTab === 'tab-ver-productos') cargarProductosDOM('listaProductosVendedor');
-            if(idTab === 'tab-vendedor-clientes') cargarClientesVendedor();
-        }
-
-        function cargarClientesVendedor() {
-            let clientes = DB.usuarios.filter(u => u.rol === 'Cliente');
-            let html = `<table class="management-table"><tr><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Acciones</th></tr>`;
-            clientes.forEach(c => { html += `<tr><td>${c.nombres} ${c.apellidos}</td><td>${c.cedula}</td><td>${c.correo}</td><td><button class="btn-delete" onclick="eliminarUsuario('${c.cedula}', 'Cliente')">Eliminar Cliente</button></td></tr>`; });
-            html += `</table>`;
-            document.getElementById('listaClientesVendedor').innerHTML = clientes.length ? html : '<p>No hay clientes registrados.</p>';
-        }
-
-// --- FUNCIÓN NUEVA: Comprimir imagen antes de guardar ---
-        function comprimirImagen(file, callback) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const img = new Image();
-                img.onload = function() {
-                    const canvas = document.createElement('canvas');
-                    // Establecemos un tamaño máximo pequeño (ej. 300px) para no saturar JSONBin
-                    const MAX_WIDTH = 300; 
-                    const MAX_HEIGHT = 300;
-                    let width = img.width;
-                    let height = img.height;
-
-                    if (width > height) {
-                        if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
-                        }
-                    } else {
-                        if (height > MAX_HEIGHT) {
-                            width *= MAX_HEIGHT / height;
-                            height = MAX_HEIGHT;
-                        }
-                    }
-                    canvas.width = width;
-                    canvas.height = height;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, width, height);
-                    
-                    // Comprimimos a formato JPEG con 60% de calidad (súper ligero)
-                    const dataUrl = canvas.toDataURL('image/jpeg', 0.6);
-                    callback(dataUrl);
-                };
-                img.src = e.target.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        // Registrar Producto ---
         function registrarProducto() {
-            let id = document.getElementById('prodId').value.trim();
-            let nombre = document.getElementById('prodNombre').value.trim();
-            let info = document.getElementById('prodInfo').value.trim();
-            let precio = parseFloat(document.getElementById('prodPrecio').value);
-            let cantidad = parseInt(document.getElementById('prodCantidad').value);
-            let archivoFoto = document.getElementById('prodFoto').files[0];
-
-            if(!id || !nombre || !info || isNaN(precio) || isNaN(cantidad)) { alert("Complete todos los campos obligatorios del producto."); return; }
-            if(precio <= 0 || cantidad < 0) { alert("Precio debe ser > 0 y cantidad >= 0."); return; }
-            if(DB.productos.some(p => p.id === id)) { alert("Ya existe un producto con el ID: " + id); return; }
-
-            let guardar = (foto) => {
-                DB.productos.push({ id: id, nombre: nombre, info: info, precio: precio, cantidad: cantidad, foto: foto });
-                sincronizarNube(); // Subimos producto y foto ya comprimida a la nube
-                alert("Producto registrado correctamente.");
-                document.querySelectorAll('#tab-add-producto input, #tab-add-producto textarea').forEach(inp => inp.value='');
-            };
-
-            if(archivoFoto) {
-                // Aquí usamos la nueva función para comprimir antes de guardar
-                comprimirImagen(archivoFoto, function(imagenComprimida) {
-                    guardar(imagenComprimida);
-                });
-            } else { 
-                guardar(null); 
-            }
+            let id = document.getElementById('prodId').value.trim(), nom = document.getElementById('prodNombre').value.trim(), inf = document.getElementById('prodInfo').value.trim();
+            let pre = parseFloat(document.getElementById('prodPrecio').value), cant = parseInt(document.getElementById('prodCantidad').value);
+            let file = document.getElementById('prodFoto').files[0];
+            if(!id || !nom || !inf || isNaN(pre) || isNaN(cant)) return alert("Complete los campos.");
+            if(pre <= 0 || cant < 0) return alert("Precio/Cant inválidos.");
+            if(DB.productos.some(p => p.id === id)) return alert("ID existe.");
+            
+            let g = (f) => { DB.productos.push({ id: id, nombre: nom, info: inf, precio: pre, cantidad: cant, foto: f }); sincronizarNube(); alert("Registrado."); document.querySelectorAll('#tab-add-producto input, #tab-add-producto textarea').forEach(i => i.value=''); };
+            if(file) comprimirImagen(file, g); else g(null);
         }
 
-        function eliminarProducto(id, contenedorRedireccion) {
-            if(confirm("¿Está seguro de eliminar este producto del inventario?")) {
-                DB.productos = DB.productos.filter(p => p.id !== id);
-                sincronizarNube(); // Eliminamos el producto de la nube
-                alert("Producto eliminado correctamente.");
-                cargarProductosDOM(contenedorRedireccion);
-            }
+        function agregarStock(idProducto) {
+            let cantInput = document.getElementById('add-stock-' + idProducto).value;
+            let extra = parseInt(cantInput);
+            if(isNaN(extra) || extra <= 0) { alert("Ingrese una cantidad válida a sumar."); return; }
+            let pIndex = DB.productos.findIndex(p => p.id === idProducto);
+            DB.productos[pIndex].cantidad += extra;
+            sincronizarNube();
+            alert("Se añadieron " + extra + " unidades al stock.");
+            cargarProductosDOM('listaProductosVendedor');
         }
 
-        // ==========================================
-        // 7. MOSTRAR CATÁLOGO DE PRODUCTOS
-        // ==========================================
-        function mostrarProductosPublicos() {
-            mostrarVista('view-productos-publico');
+        function eliminarProducto(id, cRedir) { if(confirm("¿Eliminar producto?")) { DB.productos = DB.productos.filter(p => p.id !== id); sincronizarNube(); alert("Eliminado."); cargarProductosDOM(cRedir); } }
+
+        function mostrarProductosPublicos() { mostrarVista('view-productos-publico'); cargarProductosDOM('listaProductosPublico'); }
+        function volverDesdeProductos() { if(usuarioActual && usuarioActual.rol === 'Cliente') alert("Puedes comprar en el catálogo o usar los botones de arriba."); else mostrarVista('view-home'); }
+
+        function comprarProducto(id) {
+            if(!usuarioActual) { alert("Debes iniciar sesión para comprar."); mostrarVista('view-registro-cliente'); return; }
+            if(usuarioActual.rol !== 'Cliente') { alert("Solo los clientes pueden comprar."); return; }
+            
+            let index = DB.productos.findIndex(p => p.id === id);
+            let prod = DB.productos[index];
+            if(prod.cantidad <= 0) return; // Por si acaso
+            
+            if(usuarioActual.saldo < prod.precio) { alert("La compra ha fallado por falta de fondos."); return; }
+            
+            // Éxito
+            usuarioActual.saldo -= prod.precio;
+            DB.productos[index].cantidad -= 1;
+            
+            if(!usuarioActual.historialCompras) usuarioActual.historialCompras = [];
+            usuarioActual.historialCompras.push({ fecha: new Date().toLocaleString(), nombre: prod.nombre, precio: prod.precio });
+            
+            let uIndex = DB.usuarios.findIndex(u => u.usuario === usuarioActual.usuario);
+            DB.usuarios[uIndex] = usuarioActual;
+            sincronizarNube();
+            
+            alert(`La compra de ${prod.nombre} se ha completado correctamente.`);
+            actualizarCabecera();
             cargarProductosDOM('listaProductosPublico');
         }
 
-        function volverDesdeProductos() {
-            if(usuarioActual && usuarioActual.rol === 'Cliente') alert("Estás logueado como cliente. Puedes revisar el catálogo o recargar tu saldo.");
-            else mostrarVista('view-home');
-        }
-
         function cargarProductosDOM(contenedorId) {
-            let contenedor = document.getElementById(contenedorId);
-            contenedor.innerHTML = ''; 
+            let c = document.getElementById(contenedorId); c.innerHTML = ''; 
+            if(DB.productos.length === 0) { c.innerHTML = '<p style="text-align:center;">Vacio</p>'; return; }
 
-            if(DB.productos.length === 0) {
-                contenedor.innerHTML = '<p style="text-align:center; color:#666;">No hay productos registrados aún.</p>';
-                return;
-            }
-
-            DB.productos.forEach(prod => {
-                let imgSrc = prod.foto ? prod.foto : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><rect width="150" height="150" fill="%23ccc"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="14" fill="%23666">Sin foto</text></svg>';
+            DB.productos.forEach(p => {
+                let img = p.foto ? p.foto : 'data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="150" height="150"><rect width="150" height="150" fill="%23ccc"/><text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-family="Arial" font-size="14" fill="%23666">Sin foto</text></svg>';
                 
-                let btnEliminarProdHTML = '';
-                if(usuarioActual && usuarioActual.rol === 'Admin') {
-                    btnEliminarProdHTML = `<button class="btn-delete" style="margin-top:10px;" onclick="eliminarProducto('${prod.id}', '${contenedorId}')">Eliminar Producto</button>`;
+                let extras = '';
+                if(usuarioActual && usuarioActual.rol === 'Admin') extras = `<button class="btn-delete" style="margin-top:10px;" onclick="eliminarProducto('${p.id}', '${contenedorId}')">Eliminar Producto</button>`;
+                
+                // Opción para que el Vendedor añada stock
+                if(usuarioActual && usuarioActual.rol === 'Vendedor' && contenedorId === 'listaProductosVendedor') {
+                    extras = `
+                    <div class="add-stock-container">
+                        <label style="font-size:14px; color:#155724;"><strong>Añadir Stock:</strong></label>
+                        <input type="number" id="add-stock-${p.id}" placeholder="+ Unidades">
+                        <button onclick="agregarStock('${p.id}')">Guardar</button>
+                    </div>`;
                 }
 
-                let tarjeta = `
+                // Opción de Compra (solo para vista pública/cliente)
+                let overlayAgotado = '';
+                if(contenedorId === 'listaProductosPublico') {
+                    if(p.cantidad <= 0) {
+                        overlayAgotado = `<div class="agotado-overlay">AGOTADO</div>`;
+                        extras += `<button class="btn-comprar" disabled>Agotado</button>`;
+                    } else {
+                        extras += `<button class="btn-comprar" onclick="comprarProducto('${p.id}')">Comprar</button>`;
+                    }
+                }
+
+                c.innerHTML += `
                     <div class="product-card">
                         <div class="product-info">
-                            <h3>${prod.nombre}</h3>
-                            <p><strong>Precio:</strong> $${prod.precio.toFixed(2)}</p>
-                            <p><strong>Stock:</strong> ${prod.cantidad} unidades</p>
-                            <p style="margin-top: 10px; font-size:14px; color:#555;"><strong>Descripción:</strong> ${prod.info}</p>
-                            ${btnEliminarProdHTML}
+                            <div>
+                                <h3>${p.nombre}</h3>
+                                <p><strong>Precio:</strong> $${p.precio.toFixed(2)}</p>
+                                <p><strong>Stock:</strong> ${p.cantidad} unidades</p>
+                                <p style="margin-top: 10px; font-size:14px; color:#555;"><strong>Descripción:</strong> ${p.info}</p>
+                            </div>
+                            <div>${extras}</div>
                         </div>
-                        <div class="product-id-section">
-                            <span>ID</span>
-                            <span style="font-size:24px; color:#000080;">${prod.id}</span>
-                        </div>
-                        <div class="product-image">
-                            <img src="${imgSrc}" alt="${prod.nombre}">
-                        </div>
-                    </div>
-                `;
-                contenedor.innerHTML += tarjeta;
+                        <div class="product-id-section"><span>ID</span><span style="font-size:24px; color:#000080;">${p.id}</span></div>
+                        <div class="product-image"><img src="${img}" alt="Foto">${overlayAgotado}</div>
+                    </div>`;
             });
         }
 
-        // ==========================================
-        // 8. SIMULADOR DE PAGOS
-        // ==========================================
+        // --- SISTEMA BANCARIO REALISTA ---
         function abrirMenuPago() {
             document.getElementById('lblSaldoPantalla').innerText = parseFloat(usuarioActual.saldo || 0).toFixed(2);
             document.getElementById('selectMetodoPago').value = "";
             document.getElementById('contenedorFormularioPago').innerHTML = "";
+            document.getElementById('zonaTransferencia').style.display = 'none';
             mostrarVista('view-recarga');
         }
 
         function mostrarFormularioPago() {
-            let metodo = document.getElementById('selectMetodoPago').value;
-            let divForm = document.getElementById('contenedorFormularioPago');
+            let m = document.getElementById('selectMetodoPago').value;
+            let df = document.getElementById('contenedorFormularioPago');
+            let zonaT = document.getElementById('zonaTransferencia');
             
-            if (metodo === 'paypal' || metodo === 'paygo') { divForm.innerHTML = `<input type="email" id="pagoDato1" placeholder="Correo Electrónico"><input type="password" id="pagoDato2" placeholder="Contraseña">`; }
-            else if (metodo === 'guayaquil' || metodo === 'pichincha') { divForm.innerHTML = `<input type="text" id="pagoDato1" placeholder="Número de Cuenta Bancaria"><input type="text" id="pagoDato2" placeholder="Código de Seguridad (CVV) o PIN">`; }
-            else if (metodo === 'deuna') { divForm.innerHTML = `<input type="text" id="pagoDato1" placeholder="Número de Celular"><input type="text" id="pagoDato2" placeholder="Código OTP">`; }
-            else { divForm.innerHTML = ''; }
+            if(!m) { df.innerHTML = ''; zonaT.style.display = 'none'; return; }
+
+            if (m === 'paypal' || m === 'paygo') df.innerHTML = `<input type="email" id="pD1" placeholder="Correo"><input type="password" id="pD2" placeholder="Contraseña">`;
+            else if (m === 'deuna') df.innerHTML = `<input type="text" id="pD1" placeholder="Celular"><input type="text" id="pD2" placeholder="PIN OTP">`;
+            else df.innerHTML = `<input type="text" id="pD1" placeholder="Cuenta"><input type="text" id="pD2" placeholder="CVV">`;
+            
+            // Generar o cargar el saldo bancario
+            if(!usuarioActual.saldosBancos) usuarioActual.saldosBancos = {};
+            if(usuarioActual.saldosBancos[m] === undefined) {
+                // Si es primera vez, le damos un saldo de banco aleatorio
+                usuarioActual.saldosBancos[m] = Math.floor(Math.random() * (500 - 35 + 1)) + 35;
+            }
+            
+            document.getElementById('lblSaldoBanco').innerText = usuarioActual.saldosBancos[m].toFixed(2);
+            document.getElementById('montoATransferir').value = '';
+            zonaT.style.display = 'block';
         }
 
         function simularRecarga() {
-            if(!document.getElementById('selectMetodoPago').value) { alert("Debe seleccionar un método de pago."); return; }
-            if(!document.getElementById('pagoDato1').value.trim() || !document.getElementById('pagoDato2').value.trim()) { alert("Por favor, ingrese los datos de validación."); return; }
-
-            let montoAlAzar = Math.floor(Math.random() * (500 - 35 + 1)) + 35;
-            usuarioActual.saldo = (usuarioActual.saldo || 0) + montoAlAzar;
-
-            let index = DB.usuarios.findIndex(u => u.usuario === usuarioActual.usuario);
-            if(index !== -1) {
-                DB.usuarios[index].saldo = usuarioActual.saldo;
-                sincronizarNube(); // Actualiza el saldo directo en internet
+            let m = document.getElementById('selectMetodoPago').value;
+            if(!document.getElementById('pD1').value.trim() || !document.getElementById('pD2').value.trim()) return alert("Ingrese sus datos bancarios.");
+            
+            let monto = parseFloat(document.getElementById('montoATransferir').value);
+            if(isNaN(monto) || monto <= 0) return alert("Ingrese un monto válido a transferir.");
+            
+            if(monto > usuarioActual.saldosBancos[m]) {
+                alert("Fondos insuficientes en esta cuenta bancaria. Su saldo es de $" + usuarioActual.saldosBancos[m].toFixed(2));
+                return;
             }
 
-            alert("¡Datos Correctos! Se ha procesado una recarga exitosa de $" + montoAlAzar.toFixed(2));
-            mostrarProductosPublicos();
+            // Realizar transferencia
+            usuarioActual.saldosBancos[m] -= monto;
+            usuarioActual.saldo = (usuarioActual.saldo || 0) + monto;
+
+            let uIndex = DB.usuarios.findIndex(u => u.usuario === usuarioActual.usuario);
+            DB.usuarios[uIndex] = usuarioActual;
+            sincronizarNube();
+
+            alert("Transferencia exitosa. Se añadieron $" + monto.toFixed(2) + " a su cuenta del sistema.");
+            abrirMenuPago(); // Refrescar pantalla
+            actualizarCabecera();
+        }
+
+        // --- HISTORIAL CLIENTE ---
+        function mostrarHistorial() {
+            mostrarVista('view-historial-cliente');
+            let c = document.getElementById('listaHistorialCompras');
+            if(!usuarioActual.historialCompras || usuarioActual.historialCompras.length === 0) {
+                c.innerHTML = '<p style="text-align:center;">Aún no has realizado ninguna compra.</p>'; return;
+            }
+            let h = `<table class="management-table"><tr><th>Fecha</th><th>Producto</th><th>Precio</th></tr>`;
+            usuarioActual.historialCompras.forEach(x => {
+                h += `<tr><td>${x.fecha}</td><td>${x.nombre}</td><td>$${x.precio.toFixed(2)}</td></tr>`;
+            });
+            c.innerHTML = h + '</table>';
         }
     </script>
 </body>
