@@ -27,7 +27,7 @@
         button:hover { background-color: #000050; }
         button:disabled { background-color: #999; cursor: not-allowed; }
         .btn-cancel { background-color: #666; } .btn-cancel:hover { background-color: #444; }
-        .btn-delete { background-color: #dc3545; padding: 6px 12px; font-size: 14px; } .btn-delete:hover { background-color: #bd2130; }
+        .btn-delete { background-color: #dc3545; padding: 6px 12px; font-size: 14px; margin-right: 5px; } .btn-delete:hover { background-color: #bd2130; }
         .btn-edit { background-color: #17a2b8; padding: 6px 12px; font-size: 14px; margin-right: 5px; } .btn-edit:hover { background-color: #138496; }
         .btn-comprar { background-color: #28a745; font-size: 18px; flex: 1; } .btn-comprar:hover { background-color: #218838; }
         .btn-verificar { background-color: #17a2b8; width: 100%; margin-top: 10px; } .btn-verificar:hover { background-color: #138496; }
@@ -46,6 +46,10 @@
         .management-table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #fafafa; }
         .management-table th, .management-table td { border: 1px solid #ddd; padding: 10px; text-align: left; }
         .management-table th { background-color: #eee; color: #333; }
+
+        /* Controles de Catálogo (Filtro) */
+        .catalogo-controls { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 10px; }
+        .catalogo-controls select { width: auto; min-width: 200px; margin-left: auto; }
 
         /* Productos */
         .products-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-top: 20px; }
@@ -77,7 +81,7 @@
 <body>
 
     <header>
-        <span>ventas uae</span>
+        <span>UAE-MARKET</span>
         <div class="header-controls">
             <button id="btnSaldo" class="btn-saldo" onclick="abrirMenuPago()">$0.00</button>
             <button id="btnHistorialCliente" class="btn-historial" onclick="mostrarHistorial()">Historial</button>
@@ -181,12 +185,24 @@
                 <div class="form-container">
                     <input type="text" id="prodId" placeholder="ID del Producto">
                     <input type="text" id="prodNombre" placeholder="Nombre del Producto">
+                    
+                    <label style="color: #666; font-size: 14px; margin-bottom: -5px;">Categoría:</label>
+                    <select id="prodCategoria">
+                        <option value="">-- Seleccionar Categoría --</option>
+                        <option value="Semillas">Semillas</option>
+                        <option value="Plaguicidas">Plaguicidas</option>
+                    </select>
+
                     <textarea id="prodInfo" placeholder="Información / Descripción del Producto"></textarea>
+                    
                     <label style="color: #666; font-size: 14px; margin-bottom: -5px;">Precio (USD):</label>
                     <input type="number" id="prodPrecio" placeholder="$0.00" step="0.01">
+                    
                     <input type="number" id="prodCantidad" placeholder="Cantidad Inicial">
+                    
                     <label style="color: #666; font-size: 14px; margin-bottom: -5px;">Foto del producto (Opcional al editar):</label>
                     <input type="file" id="prodFoto" accept="image/*">
+                    
                     <button id="btnRegistrarProducto" onclick="registrarProducto()">Registrar Producto</button>
                     <button id="btnCancelarEdicion" class="btn-cancel" style="display:none;" onclick="limpiarFormProductoSinRedirigir()">Cancelar Edición</button>
                 </div>
@@ -202,9 +218,16 @@
 
         <div id="view-productos-publico" class="view">
             <h2>Catálogo de Productos</h2>
-            <div class="btn-group">
+            
+            <div class="catalogo-controls">
                 <button id="btnVolverCatalogo" class="btn-cancel" onclick="mostrarVista('view-home')">Volver al Inicio</button>
+                <select id="filtroCategoria" onchange="filtrarCatalogo()">
+                    <option value="Todos">Todas las categorías</option>
+                    <option value="Semillas">Semillas</option>
+                    <option value="Plaguicidas">Plaguicidas</option>
+                </select>
             </div>
+            
             <div id="listaProductosPublico" class="products-grid"></div>
         </div>
 
@@ -253,7 +276,7 @@
 
         let DB = { usuarios: [], productos: [] };
         let usuarioActual = null;
-        let productoEnEdicion = null; // Variable para saber si estamos editando
+        let productoEnEdicion = null; 
 
         window.onload = async function() {
             try {
@@ -369,10 +392,8 @@
         }
         function cerrarSesion() { usuarioActual = null; mostrarVista('view-home'); }
         
-        // --- ELIMINAR USUARIO EN CASCADA ---
         function eliminarUsuario(c, rol) {
             if(confirm(`¿Eliminar ${rol}?`)) {
-                // Compatible con vendedores (cédula) y administradores (usuario)
                 DB.usuarios = DB.usuarios.filter(u => u.cedula !== c && u.usuario !== c); 
                 
                 if (rol === 'Vendedor') {
@@ -394,19 +415,14 @@
         function cargarUsuariosListadosAdmin() { 
             let v = DB.usuarios.filter(u => u.rol === 'Vendedor'); let hV = `<table class="management-table"><tr><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Acciones</th></tr>`; v.forEach(x => { hV += `<tr><td>${x.nombres} ${x.apellidos}</td><td>${x.cedula}</td><td>${x.correo}</td><td><button class="btn-delete" onclick="eliminarUsuario('${x.cedula}', 'Vendedor')">Eliminar</button></td></tr>`; }); document.getElementById('listaVendedoresAdmin').innerHTML = v.length ? hV+'</table>' : '<p>Vacio</p>'; 
             let c = DB.usuarios.filter(u => u.rol === 'Cliente'); let hC = `<table class="management-table"><tr><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Acciones</th></tr>`; c.forEach(x => { hC += `<tr><td>${x.nombres} ${x.apellidos}</td><td>${x.cedula}</td><td>${x.correo}</td><td><button class="btn-delete" onclick="eliminarUsuario('${x.cedula}', 'Cliente')">Eliminar</button></td></tr>`; }); document.getElementById('listaClientesAdmin').innerHTML = c.length ? hC+'</table>' : '<p>Vacio</p>'; 
-            // NUEVO: Lista de Administradores
             let a = DB.usuarios.filter(u => u.rol === 'Admin'); let hA = `<table class="management-table"><tr><th>Usuario Administrador</th><th>Acciones</th></tr>`; 
-            a.forEach(x => { 
-                let btn = (x.usuario === usuarioActual.usuario) ? '<i>(Tú)</i>' : `<button class="btn-delete" onclick="eliminarUsuario('${x.usuario}', 'Admin')">Eliminar</button>`;
-                hA += `<tr><td>${x.usuario}</td><td>${btn}</td></tr>`; 
-            }); 
+            a.forEach(x => { let btn = (x.usuario === usuarioActual.usuario) ? '<i>(Tú)</i>' : `<button class="btn-delete" onclick="eliminarUsuario('${x.usuario}', 'Admin')">Eliminar</button>`; hA += `<tr><td>${x.usuario}</td><td>${btn}</td></tr>`; }); 
             document.getElementById('listaAdminsAdmin').innerHTML = a.length ? hA+'</table>' : '<p>Vacio</p>'; 
         }
 
         function cambiarTabVendedor(id) { 
             document.querySelectorAll('#view-vendedor .tab').forEach(t => t.classList.remove('active')); 
             document.querySelectorAll('#view-vendedor .tab-content').forEach(tc => tc.classList.remove('active')); 
-            // Manejo de pestaña activa 
             if(event && event.target && event.target.classList.contains('tab')) { event.target.classList.add('active'); } 
             else { document.querySelector(`#view-vendedor .tab[onclick*="${id}"]`).classList.add('active'); }
             document.getElementById(id).classList.add('active'); 
@@ -416,13 +432,14 @@
         }
         function cargarClientesVendedor() { let c = DB.usuarios.filter(u => u.rol === 'Cliente'); let h = `<table class="management-table"><tr><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Acciones</th></tr>`; c.forEach(x => { h += `<tr><td>${x.nombres} ${x.apellidos}</td><td>${x.cedula}</td><td>${x.correo}</td><td><button class="btn-delete" onclick="eliminarUsuario('${x.cedula}', 'Cliente')">Eliminar</button></td></tr>`; }); document.getElementById('listaClientesVendedor').innerHTML = c.length ? h+'</table>' : '<p>Vacio</p>'; }
 
-        // --- SISTEMA DE EDICIÓN DE PRODUCTOS ---
+        // --- SISTEMA DE PRODUCTOS (EDICIÓN Y CATEGORÍAS) ---
         function editarProducto(id) {
             let prod = DB.productos.find(p => p.id === id);
             if(!prod) return;
             document.getElementById('prodId').value = prod.id;
-            document.getElementById('prodId').disabled = true; // El ID no se puede cambiar
+            document.getElementById('prodId').disabled = true; 
             document.getElementById('prodNombre').value = prod.nombre;
+            document.getElementById('prodCategoria').value = prod.categoria || ""; 
             document.getElementById('prodInfo').value = prod.info;
             document.getElementById('prodPrecio').value = prod.precio;
             document.getElementById('prodCantidad').value = prod.cantidad;
@@ -435,6 +452,7 @@
 
         function limpiarFormProductoSinRedirigir() {
             document.querySelectorAll('#tab-add-producto input, #tab-add-producto textarea').forEach(i => i.value=''); 
+            document.getElementById('prodCategoria').value = '';
             document.getElementById('prodId').disabled = false;
             document.getElementById('btnRegistrarProducto').innerText = 'Registrar Producto';
             document.getElementById('btnCancelarEdicion').style.display = 'none';
@@ -447,36 +465,39 @@
         }
 
         function registrarProducto() {
-            let id = document.getElementById('prodId').value.trim(), nom = document.getElementById('prodNombre').value.trim(), inf = document.getElementById('prodInfo').value.trim();
-            let pre = parseFloat(document.getElementById('prodPrecio').value), cant = parseInt(document.getElementById('prodCantidad').value);
+            let id = document.getElementById('prodId').value.trim();
+            let nom = document.getElementById('prodNombre').value.trim();
+            let cat = document.getElementById('prodCategoria').value;
+            let inf = document.getElementById('prodInfo').value.trim();
+            let pre = parseFloat(document.getElementById('prodPrecio').value);
+            let cant = parseInt(document.getElementById('prodCantidad').value);
             let file = document.getElementById('prodFoto').files[0];
             
-            if(!id || !nom || !inf || isNaN(pre) || isNaN(cant)) return alert("Complete los campos.");
+            if(!id || !nom || !cat || !inf || isNaN(pre) || isNaN(cant)) return alert("Complete todos los campos obligatorios, incluyendo la categoría.");
             if(pre <= 0 || cant < 0) return alert("Precio/Cant inválidos.");
             
-            // Modo Edición
             if (productoEnEdicion) {
                 let pIndex = DB.productos.findIndex(p => p.id === productoEnEdicion);
                 DB.productos[pIndex].nombre = nom;
+                DB.productos[pIndex].categoria = cat;
                 DB.productos[pIndex].info = inf;
                 DB.productos[pIndex].precio = pre;
                 DB.productos[pIndex].cantidad = cant;
                 
                 let guardar = (f) => {
-                    if(f) DB.productos[pIndex].foto = f; // Si hay foto nueva la actualiza, si no deja la que estaba
+                    if(f) DB.productos[pIndex].foto = f; 
                     sincronizarNube(); alert("Producto actualizado con éxito.");
                     limpiarFormProductoYVolver();
                 };
                 if(file) comprimirImagen(file, guardar); else guardar(null);
             
             } else {
-                // Modo Registro Nuevo
                 if(DB.productos.some(p => p.id === id)) return alert("ID existe.");
                 let nombreVendedor = usuarioActual ? (usuarioActual.nombres + " " + usuarioActual.apellidos) : "Vendedor Local";
                 let cedulaVendedor = usuarioActual ? usuarioActual.cedula : "0000000000";
 
                 let g = (f) => { 
-                    DB.productos.push({ id: id, nombre: nom, info: inf, precio: pre, cantidad: cant, foto: f, vendedor: nombreVendedor, vendedorCedula: cedulaVendedor, calificaciones: {} }); 
+                    DB.productos.push({ id: id, nombre: nom, categoria: cat, info: inf, precio: pre, cantidad: cant, foto: f, vendedor: nombreVendedor, vendedorCedula: cedulaVendedor, calificaciones: {} }); 
                     sincronizarNube(); alert("Registrado."); limpiarFormProductoYVolver(); 
                 };
                 if(file) comprimirImagen(file, g); else g(null);
@@ -499,7 +520,18 @@
             mostrarVista('view-productos-publico'); 
             let btnVolver = document.getElementById('btnVolverCatalogo');
             if(usuarioActual && usuarioActual.rol === 'Cliente') { btnVolver.style.display = 'none'; } else { btnVolver.style.display = 'block'; }
+            
+            document.getElementById('filtroCategoria').value = 'Todos'; // Reiniciar filtro
             cargarProductosDOM('listaProductosPublico', DB.productos); 
+        }
+
+        function filtrarCatalogo() {
+            let catSelect = document.getElementById('filtroCategoria').value;
+            let filtrados = DB.productos;
+            if(catSelect !== 'Todos') {
+                filtrados = DB.productos.filter(p => p.categoria === catSelect);
+            }
+            cargarProductosDOM('listaProductosPublico', filtrados);
         }
 
         function calificarProducto(idProducto, estrellas) {
@@ -512,13 +544,12 @@
             alert("¡Gracias por tu calificación de " + estrellas + " estrellas!");
             
             if(document.getElementById('view-productos-publico').classList.contains('active-view')) {
-                cargarProductosDOM('listaProductosPublico', DB.productos);
+                filtrarCatalogo(); // Mantiene el filtro aplicado
             } else {
                 cargarDestacadosDOM();
             }
         }
 
-        // --- COMPRAS MÚLTIPLES CORREGIDO ---
         function comprarProducto(id, botonElemento) {
             if(!usuarioActual) { alert("Debes iniciar sesión para comprar."); mostrarVista('view-registro-cliente'); return; }
             if(usuarioActual.rol !== 'Cliente') { alert("Solo los clientes pueden comprar."); return; }
@@ -527,7 +558,6 @@
             let prod = DB.productos[index];
             if(prod.cantidad <= 0) return; 
 
-            // Lee la cantidad exactamente de la caja de texto que está junto al botón presionado
             let inputContenedor = botonElemento.parentElement;
             let inputCantidad = inputContenedor.querySelector('.input-cantidad');
             let cantPedida = inputCantidad ? parseInt(inputCantidad.value) : 1;
@@ -551,7 +581,7 @@
             actualizarCabecera();
             
             if(document.getElementById('view-productos-publico').classList.contains('active-view')) {
-                cargarProductosDOM('listaProductosPublico', DB.productos);
+                filtrarCatalogo(); // Mantiene el filtro si estás en el catálogo
             } else {
                 cargarDestacadosDOM();
             }
@@ -564,7 +594,7 @@
 
         function cargarProductosDOM(contenedorId, listaDatos) {
             let c = document.getElementById(contenedorId); c.innerHTML = ''; 
-            if(!listaDatos || listaDatos.length === 0) { c.innerHTML = '<p style="text-align:center;">No hay productos.</p>'; return; }
+            if(!listaDatos || listaDatos.length === 0) { c.innerHTML = '<p style="text-align:center;">No hay productos para mostrar.</p>'; return; }
 
             let datosInvertidos = [...listaDatos].reverse();
 
@@ -575,7 +605,6 @@
                 if(usuarioActual && usuarioActual.rol === 'Admin') extras = `<button class="btn-delete" style="margin-top:10px;" onclick="eliminarProducto('${p.id}', '${contenedorId}')">Eliminar Producto</button>`;
                 
                 if(usuarioActual && usuarioActual.rol === 'Vendedor' && contenedorId === 'listaProductosVendedor') {
-                    // NUEVO: Agregado el botón Editar para el vendedor
                     extras = `
                         <div style="margin-bottom: 10px;">
                             <button class="btn-edit" onclick="editarProducto('${p.id}')">Editar</button>
@@ -590,7 +619,6 @@
                         overlayAgotado = `<div class="agotado-overlay">AGOTADO</div>`;
                         extras += `<button class="btn-comprar" disabled>Agotado</button>`;
                     } else {
-                        // AQUÍ SE PASA "this" para referenciar el botón exacto presionado
                         extras += `
                             <div class="compra-container">
                                 <input type="number" class="input-cantidad" value="1" min="1" max="${p.cantidad}">
@@ -622,6 +650,9 @@
                     let nomVend = p.vendedor || "Roger Zapata"; 
                     vendedorBadge = `<div class="seller-badge">Vendedor: ${nomVend}<br>${estrellasHTML} <span style="font-size:10px;color:#666;">(${totalVotos})</span></div>`;
                 }
+                
+                // Muestra la categoría si existe
+                let categoriaText = p.categoria ? `<p><strong>Categoría:</strong> ${p.categoria}</p>` : '';
 
                 c.innerHTML += `
                     <div class="product-card">
@@ -631,6 +662,7 @@
                                 <h3>${p.nombre}</h3>
                                 <p><strong>Precio:</strong> $${p.precio.toFixed(2)}</p>
                                 <p><strong>Stock:</strong> ${p.cantidad} unidades</p>
+                                ${categoriaText}
                                 <p style="margin-top: 10px; font-size:14px; color:#555;"><strong>Descripción:</strong> ${p.info}</p>
                             </div>
                             <div>${extras}</div>
@@ -712,7 +744,6 @@
             actualizarCabecera();
         }
 
-        // --- HISTORIAL CLIENTE ---
         function mostrarHistorial() {
             mostrarVista('view-historial-cliente');
             let c = document.getElementById('listaHistorialCompras');
